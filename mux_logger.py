@@ -4,6 +4,7 @@ import os, sys
 import socket
 import optparse
 import time
+from mux_utils import logio
 
 # Option parsing, duh
 parser = optparse.OptionParser()
@@ -37,12 +38,11 @@ def _write_log(x):
 if opts.file:
 	logname = opts.file
 	log	= open(logname, 'w')
-	print >>sys.stderr, 'MUX > Logging output to', logname
+	logio('MUX > Logging output to', logname)
 	write = _write_log
 
 else:
 	write = _write_simple
-
 
 # Setup client
 server_address = ('localhost', opts.port)
@@ -50,9 +50,9 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect(server_address)
 
 
-print >>sys.stderr, 'MUX > Connected to %s:%d' % server_address
-print >>sys.stderr, 'MUX > format: [date time elapsed delta] line'
-print >>sys.stderr, 'MUX > Use ctrl+c to stop...\n'
+logio('MUX > Connected to %s:%d' % server_address)
+logio('MUX > format: [date time elapsed delta] line')
+logio('MUX > Use ctrl+c to stop...\n')
 
 
 # Init line catcher
@@ -102,10 +102,10 @@ while True:
 	except:
 		break
 
-print >>sys.stderr, '\nMUX > Closing...'
+logio('\nMUX > Closing...')
 
 s.close()
 if opts.file:
 	log.close()
 
-print >>sys.stderr, 'MUX > Done! =)'
+logio('MUX > Done! =)')
