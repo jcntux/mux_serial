@@ -1,5 +1,3 @@
-#! /usr/bin/env python
-
 import sys
 
 def logio(msg, stdio=sys.stderr):
